@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>가장 짧은 길의 비밀 · 대칭이동 실험실</title>
+<style>
+:root{--ink:#173d3a;--muted:#667a76;--paper:#f5f5f0;--card:#fff;--line:#dfe7e0;--primary:#176657;--primary-light:#e8f3ec;--actual:#df613d;--actual-light:#fff0e9;--virtual:#396ec0;--virtual-light:#edf3fc;--best:#16816c;--gold:#e7ab43;--radius:22px;--shadow:0 8px 32px rgba(27,65,54,.045)}
+*{box-sizing:border-box}html{background:var(--paper);-webkit-text-size-adjust:100%}body{margin:0;color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans CJK KR",system-ui,sans-serif;line-height:1.55;word-break:keep-all}button,input{font:inherit}button{cursor:pointer;touch-action:manipulation}button:disabled{opacity:.5;cursor:default}button:focus-visible,input:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid #ce9d35;outline-offset:4px}button{border:0}button svg{width:17px;height:17px;vertical-align:-3px}button:not(:disabled){transition:background .16s,box-shadow .16s,transform .16s}button:not(:disabled):active{transform:translateY(1px)}[hidden]{display:none!important}.app{max-width:1490px;margin:auto;padding:28px 30px 32px}.head{display:flex;align-items:center;justify-content:space-between;gap:22px;margin-bottom:22px}.brand{display:flex;gap:16px;align-items:center}.brand-icon{width:58px;height:58px;border-radius:18px;background:var(--primary);color:white;display:grid;place-items:center;flex:none}.brand-icon svg{width:39px;height:39px}.eyebrow{font-size:12px;font-weight:750;color:var(--primary);letter-spacing:1px;margin-bottom:3px}h1{font-size:30px;line-height:1.3;letter-spacing:-1.1px;margin:0 0 6px;font-weight:850}.head p{font-size:14px;color:var(--muted);margin:0}.head-actions{display:flex;gap:9px;flex-wrap:wrap;justify-content:flex-end}.btn{min-height:44px;padding:11px 16px;border-radius:12px;font-weight:750;font-size:14px;display:inline-flex;gap:7px;align-items:center;justify-content:center;white-space:nowrap}.btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{background:#115345}.btn-white{background:#fff;border:1px solid var(--line);color:var(--ink)}.btn-white:hover{background:#f1f6f1}.btn-tint{background:var(--primary-light);color:var(--primary)}.btn-tint:hover{background:#dceee1}.btn-subtle{background:#f3f5f0;color:#546760}.btn-small{min-height:36px;padding:7px 11px;font-size:12px;border-radius:9px}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.step{background:#ecefe8;color:#66766a;border:1px solid transparent;display:flex;align-items:center;gap:10px;text-align:left;padding:13px 16px;border-radius:14px;min-height:63px}.step b{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:#fff;font-size:14px;flex:none}.step span{font-size:14px;font-weight:750;line-height:1.25}.step small{font-size:11px;display:block;font-weight:500;margin-top:4px}.step.active{background:#fff;border-color:#7aab8d;box-shadow:0 3px 10px #173d3a08;color:var(--primary)}.step.active b{background:var(--primary);color:#fff}.step.done b{background:#d6e9d8;color:var(--primary)}.guide{border:1px solid #d6e5d5;background:#edf3e9;border-radius:16px;padding:14px 18px;display:flex;justify-content:space-between;gap:18px;align-items:center;margin-bottom:18px;min-height:91px}.guide-label{color:var(--primary);font-size:11px;font-weight:800;letter-spacing:.8px}.guide h2{font-size:19px;line-height:1.4;margin:2px 0 3px;letter-spacing:-.3px}.guide p{font-size:13px;color:#536d5b;margin:0;min-height:21px}.guide .navigation{display:flex;gap:7px;flex:none}.workbench{display:grid;grid-template-columns:minmax(0,1fr) 337px;gap:18px;align-items:start}.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}.board-head{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:18px 22px 10px}.board-head h2{font-size:16px;margin:0 0 4px;letter-spacing:-.3px}.board-head p{color:var(--muted);font-size:12px;margin:0}.board-stats{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex:none}.board-live{font-size:17px;font-weight:850;line-height:1.2;font-variant-numeric:tabular-nums;letter-spacing:-.3px}.board-live small{font-size:10px;font-weight:600;color:var(--muted);margin-right:6px;letter-spacing:0}.status{border-radius:99px;background:#f0f3ed;color:#64746b;padding:6px 11px;font-size:11px;font-weight:800;white-space:nowrap}.status.success{background:#e0f3e7;color:#176657}.status.busy{background:#fff1d4;color:#826021}.board-options{display:flex;gap:13px;flex-wrap:wrap;padding:0 22px;color:var(--muted);font-size:11px}.check{display:inline-flex;gap:5px;align-items:center;cursor:pointer}.check input{accent-color:var(--primary);margin:0;width:14px;height:14px}.diagram-wrap{position:relative;padding:1px 9px 0}#diagram{display:block;width:100%;height:auto;touch-action:none;user-select:none;-webkit-user-select:none;overflow:hidden}#diagram text{font-family:inherit}#pHandle{cursor:ew-resize}.axislabel{font-size:15px;fill:#778980}.point-label{font-size:19px;font-weight:800;paint-order:stroke;stroke:#fff;stroke-width:5px;stroke-linejoin:round}.segment-label{font-size:15px;font-weight:750}.scene-note{font-size:13px;fill:#769084;font-weight:600}.legend{display:flex;flex-wrap:wrap;gap:10px 19px;justify-content:center;font-size:11px;color:var(--muted);padding:0 14px 14px}.legend span{display:flex;align-items:center;gap:6px}.swatch{display:inline-block;width:22px;height:0;border-top:3px solid var(--actual)}.swatch.virtual{border-top-color:var(--virtual);border-top-style:dashed}.swatch.best{border-top:5px solid var(--best);opacity:.7}.p-controls{background:#fafbf7;border-top:1px solid #e7ede3;padding:15px 20px 17px}.control-heading{display:flex;gap:12px;justify-content:space-between;align-items:center;margin-bottom:4px}.control-heading label{font-size:13px;font-weight:750}.coordinate-input{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted)}.coordinate-input input{width:92px;background:#fff;border:1px solid #dce5da;border-radius:9px;padding:6px 8px;min-height:36px;text-align:center;color:var(--ink);font-weight:750}.slider-line{display:flex;gap:10px;align-items:center;font-size:11px;color:var(--muted)}input[type=range]{width:100%;margin:4px 0;height:34px;accent-color:var(--primary);cursor:ew-resize;touch-action:pan-y}.controls-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:9px}.controls-row .btn{font-size:12px;padding:9px 7px}.hint{font-size:11px;color:#7f8f83;margin:10px 0 0}.playback{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#fff4d9;border:1px solid #ecd5a4;padding:9px 14px;border-radius:12px;margin-bottom:14px;font-size:12px;color:#725421}.playback strong{font-weight:750}.playback .playback-actions{display:flex;gap:6px;flex:none}.sidebar{display:flex;flex-direction:column;gap:14px}.metric{padding:19px 20px}.overline{font-size:11px;font-weight:750;color:var(--muted);letter-spacing:.4px}.metric-title{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:14px;font-weight:750}.route-tag{font-size:10px;background:var(--actual-light);color:#a4472f;padding:4px 8px;border-radius:7px;font-weight:750}.distance{display:flex;align-items:baseline;gap:10px;margin:5px 0 4px}.distance strong{font-size:42px;line-height:1.25;letter-spacing:-1.5px;font-variant-numeric:tabular-nums;font-weight:850}.distance span{font-size:12px;color:var(--muted)}.pieces{font-size:13px;display:flex;gap:8px;color:#6e7e74;align-items:center}.pieces b{color:var(--actual);font-variant-numeric:tabular-nums}.divider{height:1px;background:var(--line);margin:15px 0}.waiting{padding:14px 0 1px;display:flex;gap:9px;align-items:flex-start;font-size:12px;color:#7a897b}.waiting .round{width:23px;height:23px;background:#f0f4e9;color:#82906c;border-radius:8px;display:grid;place-items:center;flex:none;font-size:12px;font-weight:800}.equality{background:var(--virtual-light);padding:11px 12px;border-radius:12px;margin:13px 0 0}.equality .equation{font-size:17px;color:var(--virtual);font-weight:850;letter-spacing:-.4px}.equality p{font-size:11px;color:#6680a7;margin:3px 0 0}.bars{margin-top:13px}.bar-title{font-size:10px;color:var(--muted);display:flex;justify-content:space-between;margin:7px 0 4px}.bar-track{display:flex;height:12px;background:#eef2ec;border-radius:5px;overflow:hidden}.bar-segment{height:100%;transition:width .06s linear}.bar-ap{background:#eca085}.bar-pb{background:var(--actual)}.bar-pc{background:var(--virtual)}.bar-title b{font-weight:750;font-variant-numeric:tabular-nums}.best-card{background:#edf5ef;border-color:#cde1d1;padding:17px 20px}.best-card h3{font-size:14px;margin:0 0 8px}.best-values{display:flex;align-items:baseline;gap:9px}.best-values strong{font-size:28px;letter-spacing:-.8px}.best-values small{font-size:12px;color:#59806c}.extra{font-size:12px;padding-top:9px;margin-top:9px;border-top:1px solid #d7e6d8;color:#65806d}.extra strong{color:var(--actual)}.extra.found{color:var(--best);font-weight:800}.mini-chart{padding:16px 17px 13px}.mini-chart h3{font-size:12px;margin:0 0 1px}.mini-chart p{font-size:10px;color:var(--muted);margin:2px 0 0}.mini-chart svg{display:block;width:100%;height:auto;margin:4px 0 0}.records{margin-top:16px;padding:17px 20px}.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px}.section-head h3{font-size:14px;margin:0}.section-head p{font-size:11px;margin:3px 0 0;color:var(--muted)}.empty-records{font-size:12px;color:var(--muted);padding:12px 0 1px}.records-table{overflow:auto;margin-top:10px}table{width:100%;border-collapse:collapse;font-size:12px;text-align:center}th{font-size:10px;font-weight:750;color:var(--muted);background:#f4f6f0;padding:8px}td{border-bottom:1px solid #edf1e9;padding:8px;font-variant-numeric:tabular-nums}tr:last-child td{border-bottom:0}.record-button{padding:5px 9px;min-height:30px;border-radius:8px;background:#eef4ed;color:var(--primary);font-weight:700;font-size:11px}.record-best{color:var(--best);font-weight:800}.record-actions{display:flex;gap:6px}.details-grid{display:grid;grid-template-columns:minmax(0,1fr) 337px;gap:18px;margin-top:18px;align-items:start}details.card{border-radius:17px}summary{cursor:pointer;padding:16px 20px;font-size:14px;font-weight:800;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px}summary::-webkit-details-marker{display:none}summary::after{content:"＋";font-size:19px;font-weight:500;color:#829581}details[open]>summary::after{content:"−"}.detail-content{padding:0 20px 20px}.proof-step{display:flex;gap:12px;margin:12px 0}.proof-step .number{width:25px;height:25px;border-radius:8px;background:#e8f2e6;color:var(--primary);font-size:11px;font-weight:800;display:grid;place-items:center;flex:none;margin-top:1px}.proof-step h4{font-size:13px;margin:0 0 3px}.proof-step p{font-size:12px;color:var(--muted);margin:0}.math{font-family:"Cambria Math","STIX Two Math",Georgia,"Noto Sans CJK KR",serif;font-size:20px;font-weight:600;line-height:1.6;letter-spacing:.1px;color:var(--ink)}.proof-equation{background:#f4f7ef;border-radius:12px;padding:12px 15px;margin:12px 0;text-align:center}.proof-equation .math{font-size:25px}.answer-box{background:#edf5f8;border:1px solid #d8e5eb;border-radius:12px;padding:13px 15px;margin-top:13px}.answer-box h4{font-size:12px;margin:0 0 6px;color:#456e81}.answer-box p{font-size:13px;margin:4px 0;line-height:1.7}.important-note{font-size:11px!important;margin-top:11px!important;padding-left:10px;border-left:3px solid #deb568;color:#7f775d!important}.coordinate-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:10px 0}.coordinate-grid label{font-size:11px;color:var(--muted)}.coordinate-grid input{display:block;border:1px solid #dce5da;background:#fcfdf9;border-radius:9px;padding:9px;width:100%;margin-top:4px;color:var(--ink)}.settings-note{color:var(--muted);font-size:11px;margin:2px 0 12px}.settings-actions{display:flex;flex-wrap:wrap;gap:6px}.error{font-size:11px;color:#b44031;margin:9px 0 0}.footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:9px;margin-top:19px;font-size:10px;color:#809080;padding:0 3px}.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#173d3a;color:white;box-shadow:0 9px 25px #173d3a25;border-radius:12px;padding:11px 18px;font-size:12px;z-index:50;max-width:90vw;text-align:center}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.no-script{margin:30px;padding:24px;border:1px solid #ebc7bd;border-radius:16px;background:#fff0e9}svg .pulse{animation:halo 1.35s ease-in-out 3}@keyframes halo{0%,100%{opacity:.15}50%{opacity:.8}}@media(min-width:1300px){.workbench,.details-grid{grid-template-columns:minmax(0,1fr) 355px}.app{padding-left:36px;padding-right:36px}}@media(max-width:1050px){.app{padding:22px 20px}.head{align-items:flex-start}h1{font-size:26px}.head-actions{max-width:265px}.workbench{grid-template-columns:minmax(0,1fr)}.sidebar{display:grid;grid-template-columns:1fr 1fr;align-items:start}.sidebar .metric{grid-row:span 2}.details-grid{grid-template-columns:minmax(0,1fr) 300px}.step{padding:12px;gap:8px}.board-head{padding-top:16px}.diagram-wrap{padding-left:20px;padding-right:20px}.mini-chart{padding:13px 17px}.records{margin-top:15px}}
+@media(max-width:680px){.app{padding:17px 12px 24px}.head{display:block;margin-bottom:15px}.brand{gap:10px}.brand-icon{width:45px;height:45px;border-radius:14px}.brand-icon svg{width:31px;height:31px}.eyebrow{font-size:10px;letter-spacing:.3px}h1{font-size:24px;margin-bottom:4px}.head p{font-size:12px}.head-actions{max-width:none;justify-content:flex-start;margin:14px 0 0 55px}.head-actions .btn{font-size:12px;min-height:39px;padding:9px 12px}.steps{gap:6px}.step{display:block;padding:9px 7px;min-height:83px;text-align:center;border-radius:12px}.step b{margin:0 auto 6px;width:24px;height:24px;border-radius:8px;font-size:11px}.step span{font-size:11px}.step small{display:none}.guide{display:block;padding:13px 15px;min-height:132px;margin-bottom:13px}.guide h2{font-size:17px}.guide p{font-size:12px}.guide .navigation{margin-top:11px;justify-content:flex-end}.guide .navigation .btn{min-height:32px;font-size:11px;padding:6px 10px}.board-head{padding:15px 14px 8px;gap:8px}.board-head h2{font-size:14px}.board-head p{font-size:10px}.board-live{font-size:17px}.board-live small{font-size:9px;margin-right:4px}.status{font-size:9px;padding:5px 8px}.board-options{padding:0 14px;gap:10px;font-size:10px}.diagram-wrap{padding:8px 0 3px}.point-label{font-size:26px}.axislabel{font-size:20px}.segment-label{font-size:22px}.scene-note{font-size:18px}.legend{font-size:10px;gap:6px 13px;padding-bottom:12px}.swatch{width:17px}.p-controls{padding:12px 13px 14px}.control-heading label{font-size:12px}.controls-row{gap:5px}.controls-row .btn{font-size:10px;gap:3px;white-space:normal;padding:8px 4px;min-height:44px;line-height:1.4}.controls-row svg{width:14px;flex:none}.hint{font-size:10px}.sidebar{gap:10px;grid-template-columns:1fr 1fr}.metric{padding:15px 13px}.metric-title{font-size:12px}.route-tag{font-size:9px}.distance strong{font-size:32px}.distance{gap:5px}.distance span{font-size:10px}.pieces{font-size:11px;gap:5px}.waiting{font-size:10px;gap:6px}.waiting .round{width:19px;height:19px;font-size:10px}.equality{padding:9px 8px}.equality .equation{font-size:14px}.equality p{font-size:10px}.bar-title{font-size:9px}.best-card{padding:13px 12px}.best-card h3{font-size:11px}.best-values{flex-wrap:wrap;gap:0 6px}.best-values strong{font-size:24px}.best-values small{font-size:10px}.extra{font-size:10px}.mini-chart{padding:12px 10px}.mini-chart h3{font-size:10px}.mini-chart p{font-size:9px}.records{padding:14px 13px}.section-head h3{font-size:12px}.section-head p{font-size:10px}.section-head{gap:8px}.record-actions{flex-wrap:wrap;justify-content:flex-end;gap:4px}.record-actions .btn{font-size:10px;padding:7px 8px}.details-grid{grid-template-columns:1fr;gap:12px}.details-grid summary{font-size:12px;padding:14px 15px}.detail-content{padding:0 15px 16px}.proof-equation .math{font-size:22px}.answer-box p{font-size:12px}.playback{padding:8px 10px;font-size:10px;gap:7px}.playback .btn{font-size:10px;padding:6px 8px}.footer{font-size:9px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}svg .pulse{animation:none}button:not(:disabled),.bar-segment{transition:none}}
+@media print{.head-actions,.steps,.guide .navigation,.p-controls,.board-options,.playback,.record-actions,.settings-card,.footer{display:none!important}body,html{background:#fff}.app{padding:0}.workbench{grid-template-columns:2fr 1fr}.sidebar{display:flex}.card{box-shadow:none;break-inside:avoid}.details-grid{display:block}.proof-card{margin-top:15px}.guide{min-height:0}.head{margin-bottom:10px}}
+</style>
+</head>
+<body>
+<noscript><div class="no-script">이 실험실은 JavaScript가 켜진 웹브라우저에서 실행됩니다. Chrome, Edge 또는 Safari로 파일을 열어 주세요.</div></noscript>
+<main class="app" id="appRoot">
+ <header class="head">
+  <div class="brand"><div class="brand-icon" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><path d="M5 20H35" stroke="white" stroke-width="1.5" stroke-dasharray="3 3" opacity=".7"/><path d="M10 8L27 13L17 20" stroke="#f6d58b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 8L27 27" stroke="white" stroke-width="1.5" opacity=".8"/><circle cx="10" cy="8" r="3" fill="#f6d58b"/><circle cx="27" cy="13" r="3" fill="#f6d58b"/><circle cx="27" cy="27" r="3" fill="white"/><circle cx="17" cy="20" r="3" fill="white"/></svg></div>
+   <div><div class="eyebrow">공통수학2 · 도형의 대칭이동</div><h1>가장 짧은 길의 비밀</h1><p>개울가에 들러 텐트까지, 어디서 물을 마셔야 할까요?</p></div>
+  </div>
+  <div class="head-actions"><button class="btn btn-white" id="resetBtn">↺ 처음으로</button><button class="btn btn-primary" id="demoBtn">▶ 전체 시연</button></div>
+ </header>
+ <nav class="steps" aria-label="탐구 단계">
+  <button class="step active" data-stage="0" aria-current="step"><b>1</b><span>경로 움직이기<small>어디가 짧을까?</small></span></button>
+  <button class="step" data-stage="1"><b>2</b><span>B를 대칭하기<small>개울 아래에 C 만들기</small></span></button>
+  <button class="step" data-stage="2"><b>3</b><span>두 길이 비교하기<small>PB와 PC는 같아요</small></span></button>
+  <button class="step" data-stage="3"><b>4</b><span>최단거리 찾기<small>꺾인 길을 일직선으로</small></span></button>
+ </nav>
+ <section class="guide" aria-labelledby="guideTitle">
+  <div><div class="guide-label" id="guideLabel">STEP 01 · 먼저 예상하기</div><h2 id="guideTitle">개울가의 점 P를 좌우로 움직여 보세요.</h2><p id="guideText">반려견은 A에서 출발해 P에서 물을 마신 뒤 B의 텐트로 갑니다.</p></div>
+  <div class="navigation"><button class="btn btn-white btn-small" id="prevBtn" disabled>← 이전</button><button class="btn btn-primary btn-small" id="nextBtn">다음 단계 →</button></div>
+ </section>
+ <div class="playback" id="playbackBar" hidden><strong id="playbackText">시연 중</strong><div class="playback-actions"><button class="btn btn-white btn-small" id="pauseBtn">Ⅱ 일시정지</button><button class="btn btn-white btn-small" id="stopBtn">■ 끝내기</button></div></div>
+ <div class="workbench">
+  <section class="card board-card" aria-label="좌표평면 시뮬레이션">
+   <div class="board-head"><div><h2>개울가에서 만나요</h2><p id="problemCoordinates">A(−2, 3) → P(개울가) → B(3, 2)</p></div><div class="board-stats"><div class="board-live"><small>AP + PB</small><span id="boardTotal">7.634</span></div><span class="status" id="statusBadge">직접 탐색 중</span></div></div>
+   <div class="board-options"><label class="check"><input type="checkbox" id="labelsToggle" checked>길이 표시</label><label class="check"><input type="checkbox" id="gridToggle" checked>좌표 눈금</label><label class="check"><input type="checkbox" id="tracesToggle">기록한 경로 겹치기</label></div>
+   <div class="diagram-wrap"><svg id="diagram" viewBox="0 0 960 620" aria-label="점 P를 끌어 이동 거리를 비교하는 좌표평면" role="group">
+    <defs><clipPath id="plotClip"><rect x="30" y="22" width="900" height="566" rx="20"/></clipPath><marker id="axisArrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 1L6 4L0 7" fill="none" stroke="#75907c" stroke-width="1.3"/></marker><filter id="pointShadow" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#173d3a" flood-opacity=".14"/></filter></defs>
+    <g id="backLayer" clip-path="url(#plotClip)"></g><g id="gridLayer"></g><g id="traceLayer" clip-path="url(#plotClip)"></g><g id="reflectLayer"></g><g id="pathLayer" clip-path="url(#plotClip)"></g><g id="labelLayer"></g><g id="pointLayer"></g><g id="walkerLayer"></g>
+    <g id="pHandle" role="slider" tabindex="0" aria-label="개울가 점 P의 x좌표" aria-valuemin="-5" aria-valuemax="6" aria-valuenow="-1"><circle r="24" fill="transparent"/><circle id="pHalo" r="18" fill="#f3c978" opacity=".26"/><circle r="9" fill="#e2a137" stroke="#fff" stroke-width="3.5" filter="url(#pointShadow)"/><path d="M-20 0l-4 -3v6zM20 0l4 -3v6z" fill="#ae8c42"/></g>
+    <g id="pLabelLayer"></g>
+   </svg></div>
+   <div class="legend"><span><i class="swatch"></i>실제 길 A → P → B</span><span id="virtualLegend" hidden><i class="swatch virtual"></i>대칭 길 A → P → C</span><span id="bestLegend" hidden><i class="swatch best"></i>기준 선분 AC</span></div>
+   <div class="p-controls"><div class="control-heading"><label for="pSlider">↔ 물 마실 위치를 옮겨 보세요</label><div class="coordinate-input"><label for="pNumber">P의 x</label><input id="pNumber" type="number" value="-1" step="any" min="-5" max="6" aria-label="점 P의 x좌표 직접 입력"></div></div><div class="slider-line"><span id="sliderMin">−5</span><input id="pSlider" type="range" min="-5" max="6" value="-1" step="0.01" aria-label="점 P의 위치"><span id="sliderMax">6</span></div>
+    <div class="controls-row"><button class="btn btn-white" id="scanBtn">↔ 자동 탐색</button><button class="btn btn-tint" id="bestBtn">◎ 최단 위치로</button><button class="btn btn-white" id="walkBtn">▶ 경로 따라 걷기</button></div><p class="hint">노란 점 P를 마우스나 손가락으로 끌어도 됩니다. P를 선택한 뒤 방향키로도 움직일 수 있어요.</p>
+   </div>
+  </section>
+  <aside class="sidebar" aria-label="이동 거리 실시간 비교">
+   <section class="card metric"><div class="metric-title">지금 이동한 거리<span class="route-tag">실제 경로</span></div><div class="distance"><strong id="totalDistance">7.634</strong><span>거리 단위</span></div><div class="pieces"><span>AP <b id="apDistance">3.162</b></span><span>＋</span><span>PB <b id="pbDistance">4.472</b></span></div>
+    <div class="waiting" id="reflectionHint"><span class="round">2</span><span>B를 대칭하면 길이를 더 쉽게 비교할 수 있어요.</span></div>
+    <div id="reflectionEquality" hidden><div class="equality"><div class="equation" id="equalSegments">PB = PC = 4.472</div><p>P는 대칭축 위에 있어서 두 길이가 같아요.</p></div></div>
+    <div id="comparisonBox" hidden><div class="bars"><div class="bar-title"><span>실제 · AP + PB</span><b id="barActualValue">7.634</b></div><div class="bar-track"><div class="bar-segment bar-ap" id="actualAP"></div><div class="bar-segment bar-pb" id="actualPB"></div></div><div class="bar-title"><span>대칭 · AP + PC</span><b id="barVirtualValue">7.634</b></div><div class="bar-track"><div class="bar-segment bar-ap" id="virtualAP"></div><div class="bar-segment bar-pc" id="virtualPC"></div></div></div><div class="equality"><div class="equation">AP + PB = AP + PC</div><p>길 모양을 바꾸었지만, 전체 길이는 그대로!</p></div></div>
+   </section>
+   <section class="card best-card" id="bestCard" hidden><h3>선분 AC · 가능한 최단거리</h3><div class="best-values"><strong id="minDistance">7.071</strong><small id="exactDistance">= 5√2</small></div><div class="extra" id="extraDistance">현재 경로는 <strong>0.563</strong>만큼 더 길어요.</div></section>
+   <section class="card mini-chart"><h3>P의 위치에 따른 전체 거리</h3><svg id="distanceChart" viewBox="0 0 320 148" role="img" aria-label="점 P의 x좌표와 전체 이동 거리의 관계"></svg><p>가로: P의 x좌표 / 세로: AP + PB</p></section>
+  </aside>
+ </div>
+ <section class="card records" aria-labelledby="recordsTitle"><div class="section-head"><div><h3 id="recordsTitle">내가 비교한 경로</h3><p>서로 다른 위치를 기록하고 어느 쪽이 짧은지 비교해 보세요.</p></div><div class="record-actions"><button class="btn btn-tint btn-small" id="recordBtn">＋ 현재 경로 기록</button><button class="btn btn-subtle btn-small" id="clearRecordsBtn" hidden>비우기</button></div></div><p class="empty-records" id="emptyRecords">아직 기록이 없어요. 점 P를 옮긴 뒤 ‘현재 경로 기록’을 눌러 보세요.</p><div class="records-table" id="recordsTableWrap" hidden><table><thead><tr><th>기록</th><th>P의 좌표</th><th>전체 거리</th><th>비교</th><th>다시 보기</th></tr></thead><tbody id="recordsBody"></tbody></table></div></section>
+ <div class="details-grid">
+  <details class="card proof-card" id="proofDetails"><summary>왜 일직선일 때 가장 짧을까요?</summary><div class="detail-content"><div class="proof-step"><span class="number">1</span><div><h4>점을 대칭하면, 개울가에서의 거리는 같아요.</h4><p id="reflectionProof">B(3, 2)를 x축에 대하여 대칭하면 C(3, −2)입니다. P가 x축 위에 있으므로 PB = PC입니다.</p></div></div><div class="proof-step"><span class="number">2</span><div><h4>실제 길을 길이가 같은 대칭 길로 바꿔요.</h4><p>공통인 AP에 같은 길이인 PB 또는 PC를 더하므로 AP + PB = AP + PC입니다.</p></div></div><div class="proof-step"><span class="number">3</span><div><h4>꺾어서 가는 길은, 곧게 잇는 선분보다 짧을 수 없어요.</h4><p>A, P, C가 일직선 위에 있지 않으면 삼각형의 두 변의 길이의 합 AP + PC는 AC보다 큽니다. P가 선분 AC 위에 있을 때에만 같아집니다.</p></div></div><div class="proof-equation"><div class="math">AP + PB = AP + PC ≥ AC</div><div style="font-size:11px;color:#68806a">등호가 성립하는 순간: A → P → C가 꺾이지 않는 일직선</div></div><div class="answer-box"><h4 id="answerHeading">학습지 문제의 정답</h4><p id="lineEquation"></p><p id="optimalPoint"></p><p id="distanceFormula"></p><p class="important-note">C는 풀이를 위해 만든 대칭점입니다. 반려견이 실제로 개울을 건너 C로 가는 것은 아니에요. 실제 최단 경로는 A → P → B이고, 그 길이가 AC와 같습니다.</p></div></div></details>
+  <details class="card settings-card" id="settingsDetails"><summary>교사용 · 좌표 바꾸기</summary><div class="detail-content"><p class="settings-note">A와 B는 같은 쪽 개울가에 있습니다. x는 −6~6의 정수, y는 1~5의 정수로 입력하세요.</p><form id="coordinateForm"><div class="coordinate-grid"><label>A의 x좌표<input id="axInput" type="number" min="-6" max="6" step="1" value="-2" required></label><label>A의 y좌표<input id="ayInput" type="number" min="1" max="5" step="1" value="3" required></label><label>B의 x좌표<input id="bxInput" type="number" min="-6" max="6" step="1" value="3" required></label><label>B의 y좌표<input id="byInput" type="number" min="1" max="5" step="1" value="2" required></label></div><div class="settings-actions"><button type="submit" class="btn btn-primary btn-small">좌표 적용</button><button type="button" id="originalBtn" class="btn btn-white btn-small">학습지 원래 좌표</button></div><p class="error" id="coordinateError" role="alert" hidden></p></form><p class="settings-note" style="margin:12px 0 0">좌표를 바꾸면 기존 경로 기록은 지워집니다. 개울가는 계속 x축이고 C는 B의 x축 대칭점입니다.</p></div></details>
+ </div>
+ <footer class="footer"><span>길이는 소수 셋째 자리까지 표시합니다. 최단 여부는 반올림 전 값으로 판단합니다.</span><span>공통수학2A 6번 학습지 · 캠핑장 최단거리 탐구</span></footer>
+ <div class="sr-only" aria-live="polite" id="liveStatus"></div>
+</main><div class="toast" id="toast" role="status" hidden></div>
+<script>
+'use strict';
+(() => {
+  // All geometry is computed in coordinate units. SVG always uses the same
+  // horizontal and vertical scale, even when the teacher changes coordinates.
+  const $ = id => document.getElementById(id);
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+  const INITIAL = Object.freeze({ax: -2, ay: 3, bx: 3, by: 2, p: -1});
+  const state = {
+    A: {x: INITIAL.ax, y: INITIAL.ay}, B: {x: INITIAL.bx, y: INITIAL.by},
+    p: INITIAL.p, stage: 0, reflect: 0, showLabels: true, showGrid: true,
+    showTraces: false, records: [], walker: null, flashAxis: false,
+    running: false, paused: false, kind: '', playbackText: '', token: 0
+  };
+  const colors = {actual:'#df613d', virtual:'#396ec0', best:'#16816c', ink:'#173d3a'};
+  const guides = [
+    ['STEP 01 · 먼저 예상하기','개울가의 점 P를 좌우로 움직여 보세요.','반려견은 A에서 출발해 P에서 물을 마신 뒤 B의 텐트로 갑니다.'],
+    ['STEP 02 · x축에 대하여 대칭하기','B는 그대로 두고, 대칭점 C를 만들어요.','x좌표는 같고 y좌표의 부호만 반대입니다. 개울가에서 PB와 PC는 같아요.'],
+    ['STEP 03 · 같은 길이로 바꾸기','실제 길과 대칭 길은 언제나 길이가 같아요.','P를 움직여 보세요. PB = PC이므로 AP + PB = AP + PC가 유지됩니다.'],
+    ['STEP 04 · 최단거리 발견하기','꺾인 길이 일직선이 되는 순간을 찾아보세요.','선분 AC를 기준으로 비교하세요. ‘최단 위치로’를 누르면 A, P, C가 나란해집니다.']
+  ];
+  const fmt = (v, digits=3) => (Math.abs(v)<1e-10 ? 0 : v).toFixed(digits);
+  const coord = v => Number((Math.abs(v)<1e-10?0:v).toFixed(3)).toString().replace('-', '−');
+  const xy = p => `(${coord(p.x)}, ${coord(p.y)})`;
+  const clamp = (v,lo,hi) => Math.max(lo, Math.min(hi,v));
+  const distance = (p,q) => Math.hypot(p.x-q.x,p.y-q.y);
+  const reflected = () => ({x: state.B.x, y:-state.B.y});
+  function solution(A=state.A,B=state.B) {
+    if (![A.x,A.y,B.x,B.y].every(Number.isFinite) || A.y<=0 || B.y<=0) throw new Error('A와 B의 y좌표는 양수여야 합니다.');
+    const C = {x:B.x,y:-B.y};
+    return {C, x:(A.x*B.y+B.x*A.y)/(A.y+B.y), length:distance(A,C), square:(B.x-A.x)**2+(A.y+B.y)**2};
+  }
+  function metrics(p=state.p) {
+    const P={x:p,y:0}; const C=reflected(); const sol=solution();
+    const ap=distance(state.A,P), pb=distance(P,state.B), pc=distance(P,C);
+    return {ap,pb,pc,total:ap+pb,unfolded:ap+pc,min:sol.length,extra:Math.max(0,ap+pb-sol.length),xBest:sol.x,isBest:Math.abs(p-sol.x)<1e-8};
+  }
+  function viewport() {
+    const xmin=Math.min(-5,state.A.x-2,state.B.x-2)-.65;
+    const xmax=Math.max(6,state.A.x+2,state.B.x+2)+.65;
+    const ymin=-Math.max(2,state.B.y)-1.45;
+    const ymax=Math.max(3,state.A.y,state.B.y)+1.4;
+    const s=Math.min(848/(xmax-xmin),526/(ymax-ymin));
+    const left=(960-(xmax-xmin)*s)/2;
+    const top=(620-(ymax-ymin)*s)/2;
+    return {xmin,xmax,ymin,ymax,s,left,top,px:x=>left+(x-xmin)*s,py:y=>top+(ymax-y)*s,
+      pmin:Math.ceil(xmin),pmax:Math.floor(xmax)};
+  }
+  let view=viewport(), chartCache='', gridCache='';
+  const at = p => `${view.px(p.x)},${view.py(p.y)}`;
+  const seg = (a,b,attrs='') => `<line x1="${view.px(a.x)}" y1="${view.py(a.y)}" x2="${view.px(b.x)}" y2="${view.py(b.y)}" ${attrs}/>`;
+  function label(x,y,text,color=colors.ink,anchor='middle',css='segment-label') {
+    const width=text.length*(css==='segment-label'?8.2:8.7)+16;
+    return `<g transform="translate(${x},${y})"><rect x="${anchor==='middle'?-width/2:anchor==='end'?-width:0}" y="-15" width="${width}" height="26" rx="7" fill="#ffffff" fill-opacity=".91"/><text x="${anchor==='middle'?0:anchor==='end'?-8:8}" y="4" text-anchor="${anchor}" class="${css}" fill="${color}">${text}</text></g>`;
+  }
+  function resetGrid() { gridCache=''; chartCache=''; }
+  function drawGrid() {
+    const key=JSON.stringify([state.A,state.B,state.showGrid,state.stage>0]);
+    if(gridCache===key)return;
+    gridCache=key;view=viewport();
+    const left=30,right=930,top=22,bottom=588,zero=view.py(0),ox=view.px(0);
+    $('backLayer').innerHTML=`<rect x="${left}" y="${top}" width="900" height="566" rx="20" fill="#f5f8ef"/><rect x="${left}" y="${zero}" width="900" height="${bottom-zero}" fill="#eff5fc"/><path d="M${left} ${zero+10} Q100 ${zero+22} 160 ${zero+10} T300 ${zero+10} T440 ${zero+10} T580 ${zero+10} T720 ${zero+10} T860 ${zero+10} T1000 ${zero+10}" stroke="#d1e5ee" fill="none" stroke-width="3" opacity=".8"/>`;
+    let grid='';
+    if(state.showGrid) {
+      for(let x=Math.ceil(view.xmin);x<=Math.floor(view.xmax);x++) {
+        const xx=view.px(x);if(x!==0)grid+=`<line x1="${xx}" y1="${top+15}" x2="${xx}" y2="${bottom-14}" stroke="#dce6df" stroke-width="1"/>`;
+        if(x!==0)grid+=`<text x="${xx}" y="${zero+25}" text-anchor="middle" class="axislabel">${coord(x)}</text>`;
+      }
+      for(let y=Math.ceil(view.ymin);y<=Math.floor(view.ymax);y++) {
+        const yy=view.py(y);if(y!==0)grid+=`<line x1="${left+14}" y1="${yy}" x2="${right-14}" y2="${yy}" stroke="#dce6df" stroke-width="1"/>`;
+        if(y!==0)grid+=`<text x="${ox-13}" y="${yy+5}" text-anchor="end" class="axislabel">${coord(y)}</text>`;
+      }
+    }
+    grid+=`<line x1="${left+12}" y1="${zero}" x2="${right-12}" y2="${zero}" stroke="#729480" stroke-width="2.2" marker-end="url(#axisArrow)"/><line x1="${ox}" y1="${bottom-14}" x2="${ox}" y2="${top+12}" stroke="#97a99a" stroke-width="1.3" marker-end="url(#axisArrow)"/><text x="${right-15}" y="${zero-13}" class="axislabel" font-style="italic">x</text><text x="${ox+13}" y="${top+23}" class="axislabel" font-style="italic">y</text><text x="${ox-12}" y="${zero+25}" text-anchor="end" class="axislabel">O</text><text x="${left+22}" y="${zero-17}" class="scene-note">개울가 · x축</text>`;
+    if(state.stage>0)grid+=`<text x="${left+22}" y="${bottom-19}" class="scene-note">아래쪽은 대칭을 이용해 생각하는 공간이에요.</text>`;
+    $('gridLayer').innerHTML=grid;
+    $('pSlider').min=view.pmin;$('pSlider').max=view.pmax;
+    $('pNumber').min=view.pmin;$('pNumber').max=view.pmax;
+    $('sliderMin').textContent=coord(view.pmin);$('sliderMax').textContent=coord(view.pmax);
+    $('pHandle').setAttribute('aria-valuemin',view.pmin);$('pHandle').setAttribute('aria-valuemax',view.pmax);
+  }
+  function drawTent(p,virtual=false,opacity=1) {
+    const x=view.px(p.x)+34,y=view.py(p.y)-18;
+    return `<g transform="translate(${x},${y})" opacity="${opacity}" aria-hidden="true"><path d="M-17 8L0 -20L25 8Z" fill="${virtual?'#b1c8eb':'#e9ba62'}"/><path d="M-17 8L0 -20L8 8Z" fill="${virtual?'#dae5f5':'#f4d996'}"/><path d="M-8 8L0 -9L5 8Z" fill="${virtual?'#7092c2':'#b7773a'}"/><path d="M-24 10H30" stroke="${virtual?'#b0c8df':'#c6cbbb'}" stroke-width="2" stroke-linecap="round"/></g>`;
+  }
+  function paw(x,y,color=colors.actual,size=1) {
+    return `<g transform="translate(${x},${y}) scale(${size})"><circle r="14" fill="white" stroke="${color}" stroke-width="2"/><ellipse cx="0" cy="4" rx="6.5" ry="5" fill="${color}"/><ellipse cx="-7" cy="-4" rx="2.5" ry="3.3" transform="rotate(-20 -7 -4)" fill="${color}"/><ellipse cx="-2.5" cy="-7" rx="2.4" ry="3.2" fill="${color}"/><ellipse cx="3" cy="-7" rx="2.4" ry="3.2" fill="${color}"/><ellipse cx="7.3" cy="-3.7" rx="2.4" ry="3.1" transform="rotate(20 7.3 -3.7)" fill="${color}"/></g>`;
+  }
+  function drawBoard() {
+    drawGrid();
+    const A=state.A,B=state.B,C=reflected(),P={x:state.p,y:0},m=metrics();
+    const visibleC=state.stage>=1, fullC=visibleC && state.reflect>=.99999;
+    const CP={x:B.x,y:B.y*(1-2*state.reflect)};
+    let traces='';
+    if(state.showTraces)state.records.forEach(r=>{const R={x:r.p,y:0};traces+=`<polyline points="${at(A)} ${at(R)} ${at(B)}" fill="none" stroke="#93aaa0" stroke-width="2" opacity=".38" stroke-dasharray="5 7"/>`;});
+    $('traceLayer').innerHTML=traces;
+    let refl='';
+    if(visibleC) {
+      refl+=seg(B,C,'stroke="#9cb6d3" stroke-width="2" stroke-dasharray="5 6"');
+      const hx=view.px(B.x),hy=view.py(0);
+      refl+=`<path d="M${hx-10} ${hy}v-10h10" fill="none" stroke="#849fb9" stroke-width="1.5"/>`;
+      if(fullC) {
+        for(const y of [B.y/2,-B.y/2])refl+=`<path d="M${hx-5} ${view.py(y)-3}l10 6 M${hx-5} ${view.py(y)+2}l10 6" stroke="#8ca8c9" stroke-width="1.5"/>`;
+      }
+    }
+    if(state.flashAxis)refl+=`<line x1="44" y1="${view.py(0)}" x2="914" y2="${view.py(0)}" stroke="#d4a340" stroke-width="6" stroke-dasharray="14 9" class="pulse" opacity=".6"/>`;
+    $('reflectLayer').innerHTML=refl;
+    let paths='';
+    if(state.stage>=3)paths+=seg(A,C,`stroke="${colors.best}" stroke-width="11" stroke-linecap="round" opacity=".21"`)+seg(A,C,`stroke="${colors.best}" stroke-width="2" opacity=".85"`);
+    paths+=`<polyline points="${at(A)} ${at(P)} ${at(B)}" fill="none" stroke="${colors.actual}" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>`;
+    if(state.stage>=2 && fullC)paths+=`<polyline points="${at(A)} ${at(P)} ${at(C)}" fill="none" stroke="${colors.virtual}" stroke-width="3.5" stroke-dasharray="10 8" stroke-linecap="round" stroke-linejoin="round"/>`;
+    if(state.stage===1 && fullC)paths+=seg(P,C,`stroke="${colors.virtual}" stroke-width="2.5" stroke-dasharray="7 7" opacity=".65"`);
+    // Identical perpendicular distances to the axis, not lengths along the moving animation.
+    $('pathLayer').innerHTML=paths;
+    let labels='';
+    if(state.showLabels) {
+      const lx=(view.px(A.x)+view.px(P.x))/2-31,ly=(view.py(A.y)+view.py(0))/2-4;
+      labels+=label(lx,ly,`AP ${fmt(m.ap)}`,colors.actual);
+      const rx=(view.px(B.x)+view.px(P.x))/2+35,ry=(view.py(B.y)+view.py(0))/2-4;
+      labels+=label(rx,ry,`PB ${fmt(m.pb)}`,colors.actual);
+      if(fullC)labels+=label((view.px(C.x)+view.px(P.x))/2+35,(view.py(C.y)+view.py(0))/2+4,`PC ${fmt(m.pc)}`,colors.virtual);
+    }
+    $('labelLayer').innerHTML=labels;
+    let points='';
+    points+=`<circle cx="${view.px(A.x)}" cy="${view.py(A.y)}" r="7" fill="${colors.ink}" stroke="white" stroke-width="3"/><text x="${view.px(A.x)-14}" y="${view.py(A.y)-18}" text-anchor="end" class="point-label" fill="${colors.ink}">A${xy(A)}</text>`;
+    points+=`<circle cx="${view.px(B.x)}" cy="${view.py(B.y)}" r="7" fill="${colors.actual}" stroke="white" stroke-width="3"/><text x="${view.px(B.x)+9}" y="${view.py(B.y)+30}" class="point-label" fill="${colors.actual}">B${xy(B)}</text>`;
+    points+=drawTent(B);
+    if(visibleC) {
+      points+=`<circle cx="${view.px(CP.x)}" cy="${view.py(CP.y)}" r="${fullC?7:9}" fill="${colors.virtual}" stroke="white" stroke-width="3"/>`;
+      if(fullC)points+=`<text x="${view.px(C.x)+11}" y="${view.py(C.y)+29}" class="point-label" fill="${colors.virtual}">C${xy(C)}</text>`+drawTent(C,true,.6);
+      else points+=label(view.px(CP.x)+38,view.py(CP.y)+31,'대칭점 만드는 중',colors.virtual,'start','segment-label');
+    }
+    $('pointLayer').innerHTML=points;
+    $('pHandle').setAttribute('transform',`translate(${view.px(P.x)},${view.py(0)})`);
+    $('pHandle').setAttribute('aria-valuenow',String(state.p));
+    $('pHandle').setAttribute('aria-valuetext',`P의 좌표 ${xy(P)}, 전체 거리 ${fmt(m.total)}`);
+    $('pHalo').setAttribute('fill',state.stage>=3&&m.isBest?'#68ba8a':'#f3c978');
+    // Put the label away from the foot of B's reflection and away from x-axis tick labels.
+    const pLabelX=view.px(P.x)+(Math.abs(P.x-B.x)<.75?-16:0);
+    const pAnchor=Math.abs(P.x-B.x)<.75?'end':'middle';
+    $('pLabelLayer').innerHTML=`<text x="${pLabelX}" y="${view.py(0)-27}" text-anchor="${pAnchor}" class="point-label" fill="${state.stage>=3&&m.isBest?colors.best:'#a97923'}">P${xy(P)}</text>`;
+    let walkers='';
+    if(state.walker) {
+      const t=state.walker.t;
+      // Travel at the same distance per second. PB=PC ensures both walkers
+      // reach their endpoints together; neither takes a shortcut across water.
+      const d=t*m.total;
+      const first=d<=m.ap;
+      const f=first ? d/m.ap : (d-m.ap)/m.pb;
+      const start=first?A:P,end=first?P:B;
+      const actual={x:start.x+(end.x-start.x)*f,y:start.y+(end.y-start.y)*f};
+      walkers+=paw(view.px(actual.x),view.py(actual.y),colors.actual,1.05);
+      if(state.stage>=2 && !first) {
+        const virtual={x:P.x+(C.x-P.x)*f,y:C.y*f};
+        walkers+=paw(view.px(virtual.x),view.py(virtual.y),colors.virtual,.86);
+      }
+      if(state.walker.drinking)walkers+=`<circle cx="${view.px(P.x)}" cy="${view.py(0)}" r="26" fill="none" stroke="#62a9be" stroke-width="2" opacity=".7"/>`+label(view.px(P.x),view.py(0)+54,'물 마시는 중','#428caa');
+    }
+    $('walkerLayer').innerHTML=walkers;
+    $('virtualLegend').hidden=state.stage<2;$('bestLegend').hidden=state.stage<3;
+  }
+  function drawChart() {
+    const W=320,H=148,left=32,right=308,top=15,bottom=122;
+    const min=solution().length;
+    const high=Math.max(metrics(view.pmin).total,metrics(view.pmax).total);
+    const ymin=Math.max(0,Math.floor(min-1)), ymax=Math.ceil(high+.5);
+    const px=x=>left+(x-view.pmin)/(view.pmax-view.pmin)*(right-left);
+    const py=d=>bottom-(d-ymin)/(ymax-ymin)*(bottom-top);
+    const cacheKey=JSON.stringify([state.A,state.B,state.stage>=3]);
+    if(chartCache!==cacheKey) {
+      chartCache=cacheKey;let content='';
+      for(const y of [ymin,Math.round((ymin+ymax)/2),ymax])content+=`<line x1="${left}" y1="${py(y)}" x2="${right}" y2="${py(y)}" stroke="#e4ebe2" stroke-width="1"/><text x="${left-7}" y="${py(y)+4}" font-size="11" text-anchor="end" fill="#8a988a">${y}</text>`;
+      const values=Array.from({length:161},(_,i)=>{const x=view.pmin+(view.pmax-view.pmin)*i/160;return `${px(x)},${py(metrics(x).total)}`;}).join(' ');
+      content+=`<polyline points="${values}" stroke="#91afa0" stroke-width="2.2" fill="none" stroke-linecap="round"/><line x1="${left}" y1="${bottom}" x2="${right}" y2="${bottom}" stroke="#cdd9cf"/>`;
+      for(const x of [...new Set([view.pmin,0,view.pmax])])content+=`<text x="${px(x)}" y="${bottom+19}" font-size="11" text-anchor="middle" fill="#7f8e7f">${coord(x)}</text>`;
+      if(state.stage>=3){const x=solution().x;content+=`<circle cx="${px(x)}" cy="${py(min)}" r="5" fill="white" stroke="${colors.best}" stroke-width="2"/><text x="${px(x)+9}" y="${py(min)+4}" font-size="10" fill="${colors.best}">최솟값</text>`;}
+      $('distanceChart').innerHTML=`<g>${content}</g><g id="chartMarker"></g>`;
+    }
+    $('chartMarker').innerHTML=`<line x1="${px(state.p)}" y1="${py(metrics().total)}" x2="${px(state.p)}" y2="${bottom}" stroke="${colors.actual}" stroke-dasharray="3 4" opacity=".4"/><circle cx="${px(state.p)}" cy="${py(metrics().total)}" r="4.5" fill="${colors.actual}" stroke="white" stroke-width="1.5"/>`;
+  }
+  function updateMetrics() {
+    const m=metrics();
+    $('totalDistance').textContent=fmt(m.total);$('boardTotal').textContent=fmt(m.total);$('apDistance').textContent=fmt(m.ap);$('pbDistance').textContent=fmt(m.pb);
+    const full=state.stage>=1&&state.reflect>=.99999;
+    $('reflectionHint').hidden=full;$('reflectionEquality').hidden=!full;$('comparisonBox').hidden=state.stage<2;
+    $('equalSegments').textContent=`PB = PC = ${fmt(m.pb)}`;
+    $('barActualValue').textContent=fmt(m.total);$('barVirtualValue').textContent=fmt(m.unfolded);
+    const maxDist=Math.max(metrics(view.pmin).total,metrics(view.pmax).total);
+    for(const id of ['actualAP','virtualAP'])$(id).style.width=`${100*m.ap/maxDist}%`;
+    $('actualPB').style.width=`${100*m.pb/maxDist}%`;$('virtualPC').style.width=`${100*m.pc/maxDist}%`;
+    $('bestCard').hidden=state.stage<3;
+    $('minDistance').textContent=fmt(m.min);$('exactDistance').textContent=`= ${radical(solution().square)}`;
+    if(m.isBest){$('extraDistance').textContent='✓ A, P, C가 일직선! 더 짧아질 수 없어요.';$('extraDistance').className='extra found';}
+    else {$('extraDistance').innerHTML=m.extra<.001?'차이는 <strong>0.001 미만</strong>이지만, 아직 더 짧아질 수 있어요.':`현재 경로는 <strong>${fmt(m.extra)}</strong>만큼 더 길어요.`;$('extraDistance').className='extra';}
+    const badge=$('statusBadge');
+    if(state.running){badge.textContent=state.paused?'잠시 멈춤':'시뮬레이션 중';badge.className='status busy';}
+    else if(state.stage>=3&&m.isBest){badge.textContent='✓ 최단거리 발견';badge.className='status success';}
+    else {badge.textContent=state.stage>=3&&m.extra<.003?'최단 위치에 아주 가까워요':'직접 탐색 중';badge.className='status';}
+    $('pSlider').value=state.p;
+    if(document.activeElement!==$('pNumber'))$('pNumber').value=Number(state.p.toFixed(6));
+  }
+  function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){const r=a%b;a=b;b=r;}return a||1;}
+  function frac(n,d=1){if(d<0){n=-n;d=-d;}const g=gcd(n,d);n/=g;d/=g;return d===1?coord(n):`${coord(n)}/${d}`;}
+  function radical(n){for(let k=Math.floor(Math.sqrt(n));k>=1;k--){if(n%(k*k)===0){const rest=n/(k*k);return rest===1?String(k):`${k===1?'':k}√${rest}`;}}return `√${n}`;}
+  function lineText(){
+    const dx=state.B.x-state.A.x, sy=state.A.y+state.B.y;
+    if(dx===0)return `x = ${coord(state.A.x)}`;
+    const mn=-sy, md=dx, bn=state.A.y*dx+sy*state.A.x;
+    const m=frac(mn,md);let xterm=m==='1'?'x':m==='−1'?'−x':`${m} x`;
+    if(bn===0)return `y = ${xterm}`;
+    const b=frac(bn,md);return `y = ${xterm} ${b.startsWith('−')?'− '+b.substring(1):'+ '+b}`;
+  }
+  function updateProof(){
+    const sol=solution(),same=state.A.x===-2&&state.A.y===3&&state.B.x===3&&state.B.y===2;
+    $('problemCoordinates').textContent=`A${xy(state.A)} → P(개울가) → B${xy(state.B)}`;
+    $('reflectionProof').textContent=`B${xy(state.B)}를 x축에 대하여 대칭하면 C${xy(sol.C)}입니다. P가 x축 위에 있으므로 PB = PC입니다.`;
+    $('answerHeading').textContent=same?'학습지 문제의 정답':'바꾼 좌표에서의 정답';
+    $('lineEquation').textContent=`① 직선 AC의 방정식: ${lineText()}`;
+    const opt=frac(state.A.x*state.B.y+state.B.x*state.A.y,state.A.y+state.B.y);
+    $('optimalPoint').innerHTML=`② 개울가와 만나는 점: <strong>P(${opt}, 0)</strong>`;
+    const dx=state.B.x-state.A.x,dy=-state.B.y-state.A.y;
+    $('distanceFormula').innerHTML=`③ 최소 이동 거리: <strong>AC = √[(${coord(dx)})² + (${coord(dy)})²] = ${radical(sol.square)} ≈ ${fmt(sol.length)}</strong>`;
+  }
+  function updateRecords(){
+    const n=state.records.length;$('emptyRecords').hidden=n>0;$('recordsTableWrap').hidden=n===0;$('clearRecordsBtn').hidden=n===0;
+    const smallest=n?Math.min(...state.records.map(r=>r.length)):0;
+    $('recordsBody').innerHTML=state.records.map((r,i)=>`<tr><td>${i+1}</td><td>(${coord(r.p)}, 0)</td><td>${fmt(r.length)}</td><td class="${Math.abs(r.length-smallest)<1e-9?'record-best':''}">${state.stage>=3&&Math.abs(r.p-solution().x)<1e-8?'✓ 최단 경로':Math.abs(r.length-smallest)<1e-9?'기록 중 가장 짧음':'비교 경로'}</td><td><button class="record-button" data-record="${i}" aria-label="${i+1}번 경로 다시 보기">이동</button></td></tr>`).join('');
+    notifyHeight();
+  }
+  function render(){drawBoard();updateMetrics();drawChart();}
+  function updateStageUI(){
+    document.querySelectorAll('[data-stage]').forEach(el=>{const s=Number(el.dataset.stage);el.className='step'+(s===state.stage?' active':s<state.stage?' done':'');if(s===state.stage)el.setAttribute('aria-current','step');else el.removeAttribute('aria-current');});
+    $('guideLabel').textContent=guides[state.stage][0];$('guideTitle').textContent=guides[state.stage][1];$('guideText').textContent=guides[state.stage][2];
+    $('prevBtn').disabled=state.stage===0;$('nextBtn').disabled=state.stage===3;
+    $('nextBtn').textContent=state.stage===3?'마지막 단계':'다음 단계 →';
+    updateRecords();notifyHeight();
+  }
+  function stageNow(stage){state.stage=stage;state.reflect=stage>0?1:0;state.walker=null;state.flashAxis=false;resetGrid();updateStageUI();render();}
+  function playbackUI(){
+    $('playbackBar').hidden=!state.running;
+    $('playbackText').textContent=state.paused?'일시정지 · 계속을 눌러 이어 보세요.':state.playbackText||'시뮬레이션 중';
+    $('pauseBtn').textContent=state.paused?'▶ 계속':'Ⅱ 일시정지';
+    $('demoBtn').textContent=state.running&&state.kind==='demo'?'↻ 시연 다시 시작':'▶ 전체 시연';
+    updateMetrics();notifyHeight();
+  }
+  function stopAnimation(clearWalker=true){
+    state.token++;state.running=false;state.paused=false;state.kind='';state.flashAxis=false;
+    // Never leave a half-reflected point labelled C after interruption.
+    if(state.stage>=1)state.reflect=1;
+    if(clearWalker)state.walker=null;
+    playbackUI();render();
+  }
+  function tween(ms,onFrame,token){
+    return new Promise(resolve=>{
+      let elapsed=0,last=performance.now();
+      function tick(now){
+        if(token!==state.token){resolve(false);return;}
+        const dt=Math.min(64,Math.max(0,now-last));last=now;
+        if(!state.paused){elapsed+=dt;const t=Math.min(1,elapsed/ms);onFrame(t);if(t>=1){resolve(true);return;}}
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    });
+  }
+  const wait=(ms,token)=>tween(ms,()=>{},token);
+  const ease=t=>t<.5?2*t*t:1-((-2*t+2)**2)/2;
+  async function run(kind,task){
+    stopAnimation();const token=state.token;state.running=true;state.kind=kind;state.playbackText='시뮬레이션 중';playbackUI();
+    try {await task(token);}
+    catch(err){console.error(err);announce('시뮬레이션을 중단했습니다. 처음으로 버튼을 눌러 다시 시작해 주세요.');}
+    finally{if(token===state.token){state.running=false;state.paused=false;state.kind='';state.flashAxis=false;if(state.stage>=1)state.reflect=1;playbackUI();render();}}
+  }
+  function say(text){state.playbackText=text;playbackUI();$('liveStatus').textContent=text;}
+  async function moveTo(target,ms,token){
+    target=clamp(target,view.pmin,view.pmax);const from=state.p;state.walker=null;
+    return tween(ms,t=>{state.p=from+(target-from)*ease(t);if(t===1)state.p=target;render();},token);
+  }
+  async function reflectAnimation(token){
+    state.stage=1;state.reflect=0;state.flashAxis=true;resetGrid();updateStageUI();render();
+    say('대칭축 x축을 확인하세요. B는 그대로, 대칭점은 아래로!');
+    if(!await wait(650,token))return false;
+    state.flashAxis=false;
+    if(!await tween(1400,t=>{state.reflect=ease(t);render();},token))return false;
+    state.reflect=1;render();say(`대칭점 C${xy(reflected())} 완성. PB와 PC의 길이는 같아요.`);
+    return wait(450,token);
+  }
+  async function walkAnimation(token){
+    const m=metrics(),tWater=m.ap/m.total;
+    state.walker={t:0,drinking:false};say('반려견이 A에서 출발해 개울가 P로 갑니다.');
+    if(!await tween(3300*tWater,t=>{state.walker={t:t*tWater,drinking:false};render();},token))return false;
+    state.walker={t:tWater,drinking:true};render();say('P에서 물을 마셔요. 실제 길은 여기서 텐트 B로 향합니다.');
+    if(!await wait(1050,token))return false;
+    say(state.stage>=2?'실제 길은 B로, 같은 길이의 대칭 길은 C로!':'이제 텐트 B로 갑니다.');
+    if(!await tween(3300*(1-tWater),t=>{state.walker={t:tWater+(1-tWater)*t,drinking:false};render();},token))return false;
+    state.walker={t:1,drinking:false};render();say(state.stage>=2?'같은 속도로 걸으면 B와 C에 동시에 도착해요.':'텐트 B에 도착했어요.');
+    return wait(700,token);
+  }
+  function setP(value,manual=true){
+    if(!Number.isFinite(value))return;
+    if(manual)stopAnimation();
+    state.p=clamp(value,view.pmin,view.pmax);state.walker=null;render();
+  }
+  function chooseStage(stage){
+    stage=clamp(stage,0,3);
+    if(stage===1){run('reflect',reflectAnimation);return;}
+    stopAnimation();stageNow(stage);
+    if(stage===3){$('proofDetails').open=true;notifyHeight();}
+    $('liveStatus').textContent=guides[stage][1];
+  }
+  function goBest(){
+    run('best',async token=>{
+      stageNow(3);$('proofDetails').open=true;say('P를 선분 AC와 x축의 교점으로 옮깁니다.');
+      if(!await moveTo(solution().x,1250,token))return;
+      say(`최단 위치는 P${xy({x:solution().x,y:0})}, 최소 이동 거리는 ${radical(solution().square)}입니다.`);
+      await wait(700,token);$('liveStatus').textContent=`최단거리 발견. AP + PB = AC = ${fmt(solution().length)}.`;
+    });
+  }
+  async function fullDemo(token){
+    stageNow(0);$('proofDetails').open=false;state.p=clamp(-1,view.pmin,view.pmax);render();say('① 개울가의 P가 달라지면 전체 이동 거리도 달라집니다.');
+    if(!await wait(800,token))return;
+    const lo=clamp(solution().x-3,view.pmin,view.pmax),hi=clamp(solution().x+2,view.pmin,view.pmax);
+    if(!await moveTo(lo,1200,token))return;
+    if(!await moveTo(hi,1800,token))return;
+    if(!await moveTo(lo+.7,1000,token))return;
+    if(!await reflectAnimation(token))return;
+    stageNow(2);say('③ PB = PC. 위쪽의 실제 길과 아래쪽의 대칭 길은 항상 같아요.');
+    if(!await wait(1500,token))return;
+    if(!await moveTo(hi,2100,token))return;
+    if(!await wait(550,token))return;
+    stageNow(3);$('proofDetails').open=true;say('④ 초록색 선분 AC보다 짧아질 수 있을까요? 꺾인 길을 펴 봅시다.');
+    if(!await wait(1800,token))return;
+    if(!await moveTo(solution().x,2200,token))return;
+    say('A → P → C가 일직선! AP + PB = AP + PC = AC가 됩니다.');
+    if(!await wait(1600,token))return;
+    if(!await walkAnimation(token))return;
+    say(`정답: P${xy({x:solution().x,y:0})}, 최소 이동 거리 ${radical(solution().square)} ≈ ${fmt(solution().length)}.`);
+    if(!await wait(1300,token))return;
+    announce('시연이 끝났어요. P를 다시 움직이며 최단거리와 비교해 보세요.');
+  }
+  let toastTimer;
+  function announce(text){$('toast').textContent=text;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>{$('toast').hidden=true;},3400);$('liveStatus').textContent=text;}
+  function reset(original=false){
+    stopAnimation();if(original){state.A={x:-2,y:3};state.B={x:3,y:2};}
+    view=viewport();state.p=clamp(-1,view.pmin,view.pmax);state.records=[];state.stage=0;state.reflect=0;state.walker=null;state.showTraces=false;state.showLabels=true;state.showGrid=true;
+    $('tracesToggle').checked=false;$('labelsToggle').checked=true;$('gridToggle').checked=true;
+    $('proofDetails').open=false;updateCoordinateInputs();resetGrid();updateProof();updateStageUI();render();$('pNumber').value=state.p;notifyHeight();
+  }
+  function updateCoordinateInputs(){for(const [id,v] of [['axInput',state.A.x],['ayInput',state.A.y],['bxInput',state.B.x],['byInput',state.B.y]])$(id).value=v;$('coordinateError').hidden=true;}
+
+  document.querySelectorAll('[data-stage]').forEach(button=>button.addEventListener('click',()=>chooseStage(Number(button.dataset.stage))));
+  $('prevBtn').addEventListener('click',()=>chooseStage(state.stage-1));$('nextBtn').addEventListener('click',()=>chooseStage(state.stage+1));
+  $('resetBtn').addEventListener('click',()=>reset());$('originalBtn').addEventListener('click',()=>{reset(true);announce('학습지의 원래 좌표 A(−2, 3), B(3, 2)로 돌아왔어요.');});
+  $('demoBtn').addEventListener('click',()=>run('demo',fullDemo));$('bestBtn').addEventListener('click',goBest);
+  $('scanBtn').addEventListener('click',()=>run('scan',async token=>{say('P를 개울가 왼쪽부터 오른쪽까지 옮겨 보며 거리를 비교합니다.');if(!await moveTo(view.pmin,700,token))return;if(!await moveTo(view.pmax,6200,token))return;await moveTo(view.pmin,6200,token);}));
+  $('walkBtn').addEventListener('click',()=>run('walk',walkAnimation));
+  $('pauseBtn').addEventListener('click',()=>{if(!state.running)return;state.paused=!state.paused;playbackUI();});
+  $('stopBtn').addEventListener('click',()=>{stopAnimation();announce('시연을 멈췄어요. 지금 위치에서 직접 조작할 수 있어요.');});
+  $('pSlider').addEventListener('input',e=>setP(Number(e.target.value)));
+  $('pNumber').addEventListener('input',e=>{if(e.target.value!==''&&Number.isFinite(e.target.valueAsNumber))setP(e.target.valueAsNumber);});
+  $('pNumber').addEventListener('change',e=>{if(!Number.isFinite(e.target.valueAsNumber))e.target.value=Number(state.p.toFixed(6));else {setP(e.target.valueAsNumber);e.target.value=Number(state.p.toFixed(6));}});
+  $('pNumber').addEventListener('blur',()=>{$('pNumber').value=Number(state.p.toFixed(6));});
+  $('labelsToggle').addEventListener('change',e=>{state.showLabels=e.target.checked;render();});
+  $('gridToggle').addEventListener('change',e=>{state.showGrid=e.target.checked;resetGrid();render();});
+  $('tracesToggle').addEventListener('change',e=>{state.showTraces=e.target.checked;render();});
+  $('recordBtn').addEventListener('click',()=>{stopAnimation();if(state.records.some(r=>Math.abs(r.p-state.p)<1e-8)){announce('이 위치는 이미 기록했어요. P를 다른 곳으로 옮겨 보세요.');return;}if(state.records.length>=8){announce('최대 8개까지 기록할 수 있어요. 비우기를 누른 뒤 다시 기록해 주세요.');return;}state.records.push({p:state.p,length:metrics().total});updateRecords();render();announce(`${state.records.length}번 경로 기록 완료 · 전체 거리 ${fmt(metrics().total)}`);});
+  $('clearRecordsBtn').addEventListener('click',()=>{state.records=[];updateRecords();render();});
+  $('recordsBody').addEventListener('click',e=>{const btn=e.target.closest('[data-record]');if(!btn)return;const r=state.records[Number(btn.dataset.record)];if(r)run('record',async token=>{say('기록한 경로로 점 P를 옮깁니다.');await moveTo(r.p,800,token);});});
+  $('coordinateForm').addEventListener('submit',e=>{
+    e.preventDefault();const vals=['axInput','ayInput','bxInput','byInput'].map(id=>$(id).valueAsNumber);
+    if(!vals.every(Number.isInteger)||vals[0]<-6||vals[0]>6||vals[2]<-6||vals[2]>6||vals[1]<1||vals[1]>5||vals[3]<1||vals[3]>5){$('coordinateError').hidden=false;$('coordinateError').textContent='x는 −6~6의 정수, y는 1~5의 정수로 입력해 주세요.';return;}
+    stopAnimation();state.A={x:vals[0],y:vals[1]};state.B={x:vals[2],y:vals[3]};reset();announce('새 좌표를 적용했어요. B를 대칭시키는 것부터 다시 실험해 보세요.');
+  });
+  const board=$('diagram');let dragging=false;
+  function svgPointer(e){const p=board.createSVGPoint();p.x=e.clientX;p.y=e.clientY;const m=board.getScreenCTM();return m?p.matrixTransform(m.inverse()):null;}
+  board.addEventListener('pointerdown',e=>{if(e.button!==0)return;const p=svgPointer(e);if(!p)return;
+    if(e.target.closest('#pHandle')||Math.abs(p.y-view.py(0))<28){e.preventDefault();stopAnimation();dragging=true;try{board.setPointerCapture(e.pointerId);}catch(_){}setP(view.xmin+(p.x-view.left)/view.s,false);}
+  });
+  board.addEventListener('pointermove',e=>{if(!dragging)return;const p=svgPointer(e);if(p){e.preventDefault();setP(view.xmin+(p.x-view.left)/view.s,false);}});
+  function endDrag(e){if(!dragging)return;dragging=false;try{if(board.hasPointerCapture(e.pointerId))board.releasePointerCapture(e.pointerId);}catch(_){}$('liveStatus').textContent=`P${xy({x:state.p,y:0})}, 전체 거리 ${fmt(metrics().total)}`;}
+  board.addEventListener('pointerup',endDrag);board.addEventListener('pointercancel',endDrag);board.addEventListener('lostpointercapture',()=>{dragging=false;});
+  $('pHandle').addEventListener('keydown',e=>{let value=state.p;const step=e.shiftKey?.01:.1;
+    if(e.key==='ArrowLeft'||e.key==='ArrowDown')value-=step;else if(e.key==='ArrowRight'||e.key==='ArrowUp')value+=step;else if(e.key==='Home')value=view.pmin;else if(e.key==='End')value=view.pmax;else return;
+    e.preventDefault();setP(Number(value.toFixed(8)));$('liveStatus').textContent=`P의 x좌표 ${coord(state.p)}, 전체 거리 ${fmt(metrics().total)}`;
+  });
+  document.addEventListener('visibilitychange',()=>{if(document.hidden&&state.running){state.paused=true;playbackUI();}});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&state.running)stopAnimation();});
+
+  // Streamlit's custom-component handshake. No CDN, external JavaScript or
+  // network dependency is needed. The same file also runs via file:// or Pages.
+  let heightScheduled=false,lastHeight=0;
+  function post(type,extra={}){if(window.parent!==window)window.parent.postMessage({isStreamlitMessage:true,type,...extra},'*');}
+  function notifyHeight(){
+    if(heightScheduled||window.parent===window)return;heightScheduled=true;
+    requestAnimationFrame(()=>{heightScheduled=false;const h=Math.ceil($('appRoot').getBoundingClientRect().height)+10;if(h!==lastHeight){lastHeight=h;post('streamlit:setFrameHeight',{height:h});}});
+  }
+  window.addEventListener('message',event=>{if(event.source===window.parent&&event.data&&event.data.type==='streamlit:render'){post('streamlit:setFrameHeight',{height:Math.ceil($('appRoot').getBoundingClientRect().height)+10});}});
+  if('ResizeObserver' in window)new ResizeObserver(notifyHeight).observe($('appRoot'));
+  window.addEventListener('resize',notifyHeight);document.querySelectorAll('details').forEach(el=>el.addEventListener('toggle',notifyHeight));
+  // Read-only diagnostic interface for the included automated tests.
+  window.riverLab=Object.freeze({
+    snapshot:()=>JSON.parse(JSON.stringify({A:state.A,B:state.B,C:reflected(),p:state.p,stage:state.stage,reflect:state.reflect,metrics:metrics(),solution:solution(),running:state.running,paused:state.paused,records:state.records,walker:state.walker,viewport:{pmin:view.pmin,pmax:view.pmax}})),
+    solve:(A,B)=>solution(A,B),
+    pointToSVG:(x,y)=>({x:view.px(x),y:view.py(y)})
+  });
+  updateProof();updateStageUI();render();post('streamlit:componentReady',{apiVersion:1});notifyHeight();
+})();
+</script>
+</body>
+</html>
